@@ -17,7 +17,7 @@ https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams
 
 ![d](https://img.shields.io/badge/-Python3-3776AB?style=flat-square&logo=python&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-Flask-000000?style=flat-square&logo=flask&logoColor=FFFFFF)  ![d](https://img.shields.io/badge/-Javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=FFFFFF) 
 
-![z1](https://user-images.githubusercontent.com/24387014/209905568-c3955e29-59c7-46c9-8d49-6be6adf2af73.gif)
+![01](https://user-images.githubusercontent.com/24387014/209906029-d1b0ae5b-fd30-4fbd-8811-15f9377fd43d.gif)
 
 </div>
 
