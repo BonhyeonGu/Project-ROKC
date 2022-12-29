@@ -52,7 +52,7 @@ https://github.com/BonhyeonGu/ShowPoolWeb_Youtube_KnowledgeGraph
   
 </div>
 
-Neo4j DB에 올라간 정보들을 유저들에게 가시화 할 목적으로 제작된 웹 서비스 입니다.  
+*PoolMaker_Youtube_KnowledgeGraph* 로 올라간 정보를 유저에게 가시화 할 목적으로 제작된 웹 서비스 입니다.  
 해당 서비스는 *ShowPoolWeb_Recommendation* 서비스가 동작해야 모든 기능을 확인할 수 있습니다.
 
 
@@ -66,5 +66,5 @@ https://github.com/BonhyeonGu/ShowPoolWeb_Recommendation
 
 </div>
 
-ShowPoolWeb_Youtube_KnowledgeGraph 서비스의 사용자 유저를 통해 영상 추천을 시행하는 서비스입니다.  
+*ShowPoolWeb_Youtube_KnowledgeGraph* 서비스의 사용자 유저를 통해 영상 추천을 시행하는 서비스입니다.  
 해당 서비스는 Mongo DB 또는 *ShowPoolWeb_Youtube_KnowledgeGraph* 로 출력을 확인할 수 있습니다.
