@@ -6,7 +6,8 @@
 
 ## 0. Overview
 
-해당 프로젝트는 Knowledge graph, knowledge inference 관련으로 강의 영상에서 정보를 생성하여 다루는 서비스의 집합입니다.
+해당 프로젝트는 Knowledge graph, knowledge inference 관련으로  
+강의 영상에서 정보를 생성하여 다루는 서비스의 집합입니다.
 
 
 ## 1. Reasoning_over_Knowledge_Component_Streams
