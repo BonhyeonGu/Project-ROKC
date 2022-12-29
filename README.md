@@ -9,6 +9,8 @@
 해당 프로젝트는 Knowledge graph, knowledge inference 관련으로  
 강의 영상에서 정보를 생성하여 다루는 서비스의 집합입니다.
 
+해당 프로젝트의 모든 서비스를 쉽게 확인할 수 있는 도커 컴포즈가 포함되어 있습니다.
+
 
 ## 1. Reasoning_over_Knowledge_Component_Streams
 
