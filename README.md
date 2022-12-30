@@ -17,8 +17,9 @@ git clone https://github.com/BonhyeonGu/Project-ROKC rokc
 cd rokc
 docker-compose up
 ```
-이후 "Ready to ROKCS"가 출력되면 Reasoning_over_Knowledge_Component_Streams 서비스를 이용하실 수 있습니다.  
-그리고 "Ready to ShowPoolWeb"가 출력되면 ShowPoolWeb 서비스를 이용하실 수 있습니다.  
+이후 zol1 에서 "Ready to ROKCS"가 출력되면  
+Reasoning_over_Knowledge_Component_Streams 서비스를 이용하실 수 있습니다.  
+그리고 zol2 에서 "Ready to ShowPoolWeb"가 출력되면 ShowPoolWeb 서비스를 이용하실 수 있습니다.  
 해당 출력은 순서가 상이할 수 있습니다.
 
 각 웹 서비스는 Reasoning_over_Knowledge_Component_Streams 가 http://127.0.0.1:5050  
