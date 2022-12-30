@@ -1,70 +1,133 @@
 <div align="center">
 
-<h1>Project ROKC</h1>
+<h1>Reasoning over Knowledge Component Streams</h1>
+
+![d](https://img.shields.io/badge/-Python3-3776AB?style=flat-square&logo=python&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-Flask-000000?style=flat-square&logo=flask&logoColor=FFFFFF)  ![d](https://img.shields.io/badge/-Javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=FFFFFF) 
 
 </div>
 
-## 0. Overview
-
-해당 프로젝트는 Knowledge graph, knowledge inference 관련으로  
-강의 영상에서 정보를 생성하여 다루는 서비스의 집합입니다.
-
-해당 프로젝트의 모든 서비스를 쉽게 확인할 수 있는 도커 컴포즈가 포함되어 있습니다.
-
-
-## 1. Reasoning_over_Knowledge_Component_Streams
-
-https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams
+## Overview
 
 <div align="center">
-
-![d](https://img.shields.io/badge/-Python3-3776AB?style=flat-square&logo=python&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-Flask-000000?style=flat-square&logo=flask&logoColor=FFFFFF)  ![d](https://img.shields.io/badge/-Javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=FFFFFF) 
 
 ![01](https://user-images.githubusercontent.com/24387014/209906029-d1b0ae5b-fd30-4fbd-8811-15f9377fd43d.gif)
 
 </div>
 
-유튜브 URL을 입력하면 주제 컴포넌트를 출력할 수 있는 서비스입니다. 여러 선택지가 주어집니다.
+유튜브 영상의 Knowledge Component를 출력하는 프로그램입니다.
+대부분 처리하기 위해 미리 가공된 Wikipedia Data를 사용하며 하나의 속성을 크롤링, 캐싱합니다.
 
+해당 서비스는 [Project-ROKC](https://github.com/BonhyeonGu/Project-ROKC)의 일부분 입니다.
 
-## 2. PoolMaker_Youtube_KnowledgeGraph
+## How to Install & Run (Docker)
 
-https://github.com/BonhyeonGu/PoolMaker_Youtube_KnowledgeGraph
+reposit에 동봉된 Dockerfile, [docker-compose](https://docs.docker.com/compose/install/)로 컨테이너로 설치하여 사용 가능합니다.  
+workspace 내에서 아래의 명령어를 입력하고 http://127.0.0.1:5050 으로 접속 가능합니다.
+
+```bash
+docker-compose up -d
+```
+
+해당 도커파일은 빌드시 dump된 파일들을 github에서 내려받습니다. 따라서 인터넷이 되는 환경에서만 빌드가 가능하며  
+약 한 시간의 시간이 소요될 수 있습니다.
+
+## How to Install (Bare Metal)
+
+해당 프로그램은 아래의 추가적 Python Module들을 필요로 합니다.
+
+ - flask
+ - youtube-transcript-api
+ - beautifulsoup4
+ - lxml
+ - numpy
+ - nltk (추가 설치 필요, workspace 내부의 nltk_install.py로 처리할 수 있습니다.)
+ - matplotlib
+ - networkx
+
+해당 프로그램은 큰 자료구조를 상시 머물게 하며 작동됩니다. 따라서 최소 아래의 사양이 필요합니다.
+ - RAM : 16GB
+ - Workspace : 20GB (실행 케이스에 따라 더 필요할 수 있음)
+
+다음은 자료구조를 Dump한 파일들이 필요합니다. 해당 reposit의 [Releases](https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams/releases)에서 확인 가능합니다.  
+모두 내려받은 후 workspace에 넣습니다.  
+'backlinksZip.7z' 는 분할 압축 되어있으니 압축을 풀고 내용만 workspace 내에 위치하면 되며, 압축파일은 삭제해도 무방합니다.
+
+다음은 workspace 내에 driectory 두 개를 다음 이름으로 생성합니다.
+
+ - pr0dens
+ - backlinks
+
+이후 workspace내부의 unzipBacklinks.py를 실행합니다. all_clear가 출력되어야 완료되었음을 나타냅니다. 이 작업이 완료되면 driectory-backlinks가 채워진 것을 확인할 수 있습니다.
+
+아래는 준비가 완료되었을 때의 조회입니다. ('nohup.out'은 linux background가 생성함)
+![clear](https://user-images.githubusercontent.com/24387014/184473483-f47834f2-b9d6-45a7-82db-23885925cdd0.PNG)
+
+## How to Run (Bare Metal)
+
+### Run : Web Service
+
+workspace 내부의 app.py로 flask run 명령어를 통하여 웹 서비스를 실행할 수 있습니다.  
+http://127.0.0.1:5050 으로 접속 가능합니다.
+
+### Debug : Only Find KnowledgComponent
+
+workspace 내부의 ComponentExtractor.py을 edit open하여 92번째 줄을 주석 해제합니다.  
+해당 메소드의 각 인자는 youtube url, Second of Second of Split Segmen를 뜻합니다. 원하는 대로 edit 후 open된 ComponentExtractor.py 자체를 실행합니다.  
+KnowledgComponent 가 Buffer에 출력됩니다.
+
+주의 : 만약 다시 Web Service로 Run 하고 싶다면 해당 92번째 줄을 다시 주석처리 해주어야 합니다.
+
+### Debug : Visualization Graph
+
+workspace 내부의 MC_Graph.py을 edit open하여 __414번째 줄__을 주석 해제합니다. 해당 작업은 위의 *Only Find KnowledgComponent*와 함께 쓰시는 것을 권장드립니다.
+종료되면 matplotlib와 networkx를 통해 Graph Window가 나타납니다.
 
 <div align="center">
 
-![d](https://img.shields.io/badge/-Python3-3776AB?style=flat-square&logo=python&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-Neo4j-4581C3?style=flat-square&logo=neo4j&logoColor=FFFFFF)  
+![Graph](https://user-images.githubusercontent.com/24387014/184474406-7c54a7dd-c561-4a59-aa17-4432bc2ad887.jpeg)
 
 </div>
 
-*Reasoning_over_Knowledge_Component_Streams* 의 기능을 Neo4j DB에 넣을 수 있게 작성된 서비스입니다.
+또는 visualizeGraph.py에서 그래프 모양을 설정할 수 있습니다.
 
+주의 : 해당 작업은 출력 생성과 출력을 살펴보려는 시도에서 Over head가 지속적으로 발생합니다.
 
-## 3. ShowPoolWeb_Youtube_KnowledgeGraph
-
-https://github.com/BonhyeonGu/ShowPoolWeb_Youtube_KnowledgeGraph
+## Tutorial
 
 <div align="center">
 
-![d](https://img.shields.io/badge/-Python3-3776AB?style=flat-square&logo=python&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-Neo4j-4581C3?style=flat-square&logo=neo4j&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-MongoDB-47A248?style=flat-square&logo=Mongodb&logoColor=FFFFFF)  ![d](https://img.shields.io/badge/-Javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=FFFFFF)
+![02_Tuto](https://user-images.githubusercontent.com/24387014/184350805-697abed0-3e3c-4a21-bea5-7bc2b150685d.png)
 
-![03](https://user-images.githubusercontent.com/24387014/209906492-20388a10-0910-40ea-8050-1051c69b349d.gif)  
-  
 </div>
 
-*PoolMaker_Youtube_KnowledgeGraph* 로 올라간 정보를 유저에게 가시화 할 목적으로 제작된 웹 서비스 입니다.  
-해당 서비스는 *ShowPoolWeb_Recommendation* 서비스가 동작해야 모든 기능을 확인할 수 있습니다.
+### 1. Youtube URL
 
+유튜브 동영상의 URL 주소를 입력합니다. 단 유튜브 공식 기능의 **영어 자막이 존재하는 영상**이여야 합니다.
 
-## 4. ShowPoolWeb_Recommendation
+### 2. Second of Split Segment  (Default 300.0)
 
-https://github.com/BonhyeonGu/ShowPoolWeb_Recommendation
+Segment를 나눌 기준이 되는 시간(초)를 정의합니다.
+만약 자막의 시간 범위가 여기서 정의한 기준을 가로지르는 경우 해당 자막은 두 Segment Knowledge Component 모두 영향을 끼치게 됩니다.
+
+예를 들어 해당 값이 300.0초이고 자막이 영상의 14분 55초 부터 15분 02초에 종료된다면
+해당 자막은 세번째, 네번째 Segment에 영향을 끼칩니다.
+
+### 3. Number of Knowledge Component (Default 5)
+
+하나의 Segment에 몇개의 Knowledge Component를 확보할 것인지에 대한 정의입니다.
+
+### 4. Whether of Calculate Hit Count (Default False)
+
+자막 속 Mention들을 계속해서 반영하게 되면, 단어를 중복적으로 연결짓게 됩니다. 이는 결과가  Mention의 등장 횟수와 연관됩니다.
+만약 해당 값을 False로 정의한다면, 한 Segment속에 동일한 Mention이 접수될 때 필터링 됩니다. 
+
+### 5. Whether of Output Structure (Default Triple)
+	
+결과를 보기 편하게 Knowledge Component 형식으로 표시하거나 Triple 형식으로 출력하기를 결정합니다.
+Triple 타입은 다음 프로젝트에 사용할 예정입니다.
 
 <div align="center">
 
-![d](https://img.shields.io/badge/-Python3-3776AB?style=flat-square&logo=python&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-Neo4j-4581C3?style=flat-square&logo=neo4j&logoColor=FFFFFF) ![d](https://img.shields.io/badge/-MongoDB-47A248?style=flat-square&logo=Mongodb&logoColor=FFFFFF)  
+![3_TripleOrTuple](https://user-images.githubusercontent.com/24387014/184352041-729f6567-39bb-41a8-bda4-c1e31367badb.png)
 
 </div>
-
-*ShowPoolWeb_Youtube_KnowledgeGraph* 서비스의 사용자 유저를 통해 영상 추천을 시행하는 서비스입니다.  
-해당 서비스는 Mongo DB 또는 *ShowPoolWeb_Youtube_KnowledgeGraph* 로 출력을 확인할 수 있습니다.
