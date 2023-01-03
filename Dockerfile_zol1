@@ -1,0 +1,43 @@
+FROM ubuntu:20.04
+LABEL email="bonhyeon.gu@9bon.org"
+LABEL name="BonhyeonGu"
+
+WORKDIR /usr/src/app
+RUN apt-get update
+RUN apt-get install -y git wget p7zip p7zip-full
+RUN apt-get install -y python3 python3-pip
+RUN pip3 install flask youtube-transcript-api beautifulsoup4 lxml numpy nltk matplotlib networkx neo4j
+RUN git clone https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams rokcs
+RUN git clone https://github.com/BonhyeonGu/PoolMaker_Youtube_KnowledgeGraph pm
+
+WORKDIR /usr/src/app/rokcs
+
+RUN wget https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams/releases/download/v1.0.0/anchorData.pkl
+RUN wget https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams/releases/download/v1.0.0/ComIDToTitle.npy
+RUN wget https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams/releases/download/v1.0.0/ComTittleToID.pkl
+RUN wget https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams/releases/download/v1.0.0/backlinksZip.7z.001
+RUN wget https://github.com/BonhyeonGu/Reasoning_over_Knowledge_Component_Streams/releases/download/v1.0.0/backlinksZip.7z.002
+#COPY ./anchorData.pkl ./
+#COPY ./ComIDToTitle.npy ./
+#COPY ./ComTittleToID.pkl ./
+#COPY ./backlinksZip.7z.001 ./
+#COPY ./backlinksZip.7z.002 ./
+
+RUN 7z x backlinksZip.7z.001 -aoa
+RUN rm backlinksZip.7z.001
+RUN rm backlinksZip.7z.002
+RUN mkdir pr0dens
+RUN mkdir backlinks
+RUN python3 unzipBacklinks.py
+RUN python3 nltk_install.py
+
+WORKDIR /usr/src/app/pm
+#RUN rm input.txt
+#COPY input.txt ./input.txt
+COPY secret.py ./secret/secret.py
+
+WORKDIR /usr/src/app/rokcs
+RUN cp ../pm/input.txt ./
+#COPY input.txt ./input.txt
+EXPOSE 5050
+ENTRYPOINT ["/bin/sh", "-c" , "python3 ../pm/main.py && python3 app.py && tail -f /dev/null"]

@@ -1,0 +1,14 @@
+FROM ubuntu:20.04
+LABEL email="bonhyeon.gu@9bon.org"
+LABEL name="BonhyeonGu"
+
+WORKDIR /usr/src/app
+RUN apt-get update && apt-get install -y git python3 python3-pip
+RUN pip3 install flask neo4j pymongo
+RUN git clone https://github.com/BonhyeonGu/ShowPoolWeb_Youtube_KnowledgeGraph sh
+
+WORKDIR /usr/src/app/sh
+COPY secret.py ./secret/secret.py
+
+EXPOSE 5051
+ENTRYPOINT [ "python3", "app.py" ]
