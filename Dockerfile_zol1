@@ -33,11 +33,10 @@ RUN python3 nltk_install.py
 
 WORKDIR /usr/src/app/pm
 #RUN rm input.txt
-#COPY input.txt ./input.txt
+COPY input.txt ./input.txt
 COPY secret.py ./secret/secret.py
 
 WORKDIR /usr/src/app/rokcs
 RUN cp ../pm/input.txt ./
-#COPY input.txt ./input.txt
 EXPOSE 5050
 ENTRYPOINT ["/bin/sh", "-c" , "python3 ../pm/main.py && python3 app.py && tail -f /dev/null"]
